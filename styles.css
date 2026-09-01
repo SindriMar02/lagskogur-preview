@@ -202,7 +202,7 @@ html.with-modal .header__menu-word--close{opacity:1;transform:none}
 .header .btn--underline{font-size:1.3rem}
 .header .header__book{display:inline-flex}
 @media (max-width:767px){
-  .header{padding:var(--spacing) var(--spacing) 0}
+  .header{padding:max(var(--spacing),env(safe-area-inset-top)) var(--spacing) 0}
   .header__book{display:none!important}
   .header__menu-words{display:none}
   .header__logo{width:110px}
@@ -1182,3 +1182,7 @@ body{overflow-x:clip}
    whitespace spans and the word padding can add a pixel or two, which dropped
    "village" onto its own line in a house lead */
 .line-wrap .line{white-space:nowrap}
+
+/* iOS with viewport-fit=cover: the bar must clear the Dynamic Island (the mobile
+   override above used to drop the env() term and the wordmark sat under the island) */
+@media (max-width:767px){.header{padding-top:max(var(--spacing),env(safe-area-inset-top))}}
