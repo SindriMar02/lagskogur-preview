@@ -613,7 +613,7 @@ html.no-scroll-smooth .l-tenets{clip-path:inset(0 0 -100svh)}
    3D dependency, GPU-dependent, and it warped the paintings onto a cylinder)
    for a chapter whose only job is to let you LOOK at the pictures. ---- */
 .l-selection{padding-bottom:calc(var(--spacing)*8)}
-.l-hang{position:relative;height:320svh;display:grid;grid-template-areas:"sticky_content";grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr}
+.l-hang{position:relative;height:250svh;display:grid;grid-template-areas:"sticky_content";grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr}
 .l-hang__pin{grid-area:sticky_content;height:100svh;overflow:hidden;display:flex;align-items:center}
 .l-hang__track{display:flex;align-items:center;gap:6vw;padding:0 22vw;will-change:transform;cursor:grab;touch-action:pan-y}
 .l-hang__track.is-grabbing{cursor:grabbing}
@@ -630,8 +630,9 @@ html.no-scroll-smooth .l-tenets{clip-path:inset(0 0 -100svh)}
 .l-selection__title{grid-area:sticky_content;height:100svh;display:flex;align-items:center;justify-content:center;pointer-events:none;will-change:transform,opacity}
 .l-selection__title>div{display:flex;flex-direction:column;align-items:center;gap:calc(var(--spacing)*1.25)}
 .l-selection__title .text-subtitle{text-shadow:0 2px 40px rgba(0,0,0,.6)}
-.l-selection__flow{position:relative;z-index:1;padding-top:calc(var(--spacing)*4)}
-.l-selection__spacer{height:100svh}
+.l-selection__flow{position:relative;z-index:1;padding-top:calc(var(--spacing)*2.5);padding-bottom:calc(var(--spacing)*4)}
+.l-selection__spacer{height:18svh}
+.l-selection__statement{padding-right:var(--spacing)}
 .l-selection__statement{text-transform:none}
 .l-selection__statement .char{text-transform:uppercase}
 .l-selection__statement .word.is-lower .char{text-transform:none}
@@ -641,7 +642,7 @@ html.no-scroll-smooth .l-tenets{clip-path:inset(0 0 -100svh)}
   .l-hang__item{width:64vw}
   .l-hang__item--tall{width:56vw}
   .l-hang__item--low{width:60vw;margin-bottom:4svh}
-  .l-selection__spacer{height:40svh}
+  .l-selection__spacer{height:14svh}
   .l-hang__hint{display:none}
 }
 
@@ -729,6 +730,12 @@ html.no-scroll-smooth .l-tenets{clip-path:inset(0 0 -100svh)}
   .l-location__mcard .text-small{color:#fff}
   .l-location__mcard p:last-child{color:rgba(255,255,255,.7)}
 }
+
+/* ---- day to night, slowly: a light chapter into a dark one (and back) fades over the
+   top of the arriving chapter instead of cutting ---- */
+.section.ui-light+.section.ui-dark::before,.section.ui-dark+.section.ui-light::before{content:"";position:absolute;left:0;right:0;top:0;height:18svh;z-index:3;pointer-events:none}
+.section.ui-light+.section.ui-dark::before{background:linear-gradient(#EFECE6,rgba(239,236,230,0))}
+.section.ui-dark+.section.ui-light::before{background:linear-gradient(#16181A,rgba(22,24,26,0))}
 
 /* ---- 10 the idea / notes ---- */
 .l-journey{padding-top:calc(var(--spacing)*6)}
