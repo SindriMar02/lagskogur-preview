@@ -209,12 +209,12 @@ const PATTERNS = {
   landingLocationMapDesktop: { measure: 'closest:.sticky', keys: () => [
       { v: 100, e: 0, p: { transform: 'translate(-50%,-50%) translate(6%,-26%) scale(1.85)' } },
       { v: 0, e: 0, p: { transform: 'translate(-50%,-50%) translate(4%,-12%) scale(1.85)' } },
-      { v: -100, e: 0, p: { transform: 'translate(-50%,-50%) translate(0%,4%) scale(1.42)' } },
-      { v: -750, e: 0, p: { transform: 'translate(-50%,-50%) translate(-15%,7%) scale(1.42)' }, easing: 'easeSection' },
-      { v: -800, e: 0, p: { transform: 'translate(-50%,-50%) translate(-32.1%,-5.2%) scale(2.0)' } }], clamp: true },
+      /* settle where all five dots sit inside the frame: the sheet is 5:4 and the dots
+         span 68% of its height, so anything past ~1.1 crops Brún or Hrossholt */
+      { v: -100, e: 0, p: { transform: 'translate(-50%,-50%) translate(0%,-1%) scale(.96)' } },
+      { v: -420, e: 0, p: { transform: 'translate(-50%,-50%) translate(0%,-1%) scale(.96)' } }], clamp: true },
   landingLocationMapTitleDesktop: { measure: 'closest:.section', keys: () => [{ v: 0, e: 0, p: { opacity: '1' }, easing: 'easeOutQuad' }, { v: -100, e: 0, p: { opacity: '0' } }], clamp: true },
   landingLocationMapPinDesktop: { measure: 'closest:.section', keys: () => [{ v: 0, e: 0, p: { opacity: '0' } }, { v: -80, e: 0, p: { opacity: '0' } }, { v: -100, e: 0, p: { opacity: '1' } }], clamp: true, onUpdate: (el, p) => el.classList.toggle('is-seen', p > .99) },
-  landingLocationMapProgress: { measure: 'closest:.sticky', keys: () => [0,1,2,3,4,5,6].map(i => ({ v: -100 * i, e: 0, p: { transform: `scaleX(${(i / 7).toFixed(4)})`, progress: String(i / 7) } })).concat([{ v: 100, e: 100, p: { transform: 'scaleX(1)', progress: '1' } }]), clamp: true },
   landingJourneyBackgroundDesktop: { measure: 'closest:.section', keys: () => [{ v: 0, e: 0, p: { transform: 'translateY(0svh)' } }, { v: 100, e: 100, p: { transform: 'translateY(250svh)' } }], clamp: false },
   registerBgMove: { measure: 'closest:.section', target: 'img', keys: () => [{ v: 100, e: 0, p: { transform: 'translateY(0svh)' } }, { v: 0, e: 100, p: { transform: 'translateY(-40svh)' } }], clamp: true, mobile: true },
   registerBgScale: { measure: 'closest:.section', target: 'img', keys: () => [{ v: 100, e: 0, p: { transform: 'scale(1.1)' } }, { v: 0, e: 100, p: { transform: 'scale(1)' } }], clamp: true, mobile: true },
@@ -904,9 +904,8 @@ const scrollCue = (() => {
    MAP CHAPTER
    ============================================================ */
 const map = (() => {
-  const pins = $$('.l-location__pin'), labels = $$('.js-loc-labels p'), texts = $$('.js-loc-texts p'), counter = $('#loc-counter'), prog = $('.js-loc-progress');
-  const routes = $$('.l-location__route'), inner = $('.js-map-inner');
-  const section = $('#locations'), sheet = $('.l-location__map-img');
+  const pins = $$('.l-location__pin'), legend = $$('.js-loc-legend li'), texts = $$('.js-loc-texts p'), inner = $('.js-map-inner');
+  const section = $('#locations'), sheet = $('.l-location__map-img'), mapEl = $('.js-location-map');
   const loader = chapterLoader($('.l-location__map-pin'), 'Loading the map');
   let sheetStarted = false;
   const loadSheet = () => {
@@ -918,48 +917,65 @@ const map = (() => {
     if (sheet.complete) done(); else { sheet.addEventListener('load', done, { once: true }); sheet.addEventListener('error', done, { once: true }); }
   };
   const mobile = $('.js-mobile-scrollable'), mapPin = $('.l-location__map-pin');
-  const HOME = { x: 33.67, y: 81.03 };
-  /* Dash the routes from their MEASURED length. pathLength normalisation is
-     ignored by Chrome once a stroke is non-scaling, which turned the draw-on
-     into a permanently dashed line. */
-  const lens = routes.map(r => { const L = r.getTotalLength(); r.style.strokeDasharray = L; r.style.strokeDashoffset = L; return L; });
-  let last = -1, panX = 0, panY = 0, tx = 0, ty = 0;
-  const setIndex = i => {
+  /* One dot per place. Bakki and Holt stand thirty metres apart and Lundur and
+     Klettur share a drive, so at any legible zoom they are one dot with two names. */
+  const housesOf = pins.map(p => (p.dataset.houses || '').split(' ').map(Number));
+  const pinOf = i => pins.findIndex((p, k) => housesOf[k].includes(i));
+  const S = 2.1; // phone zoom around the chosen dot
+  const lim = (v, a, b) => Math.min(b, Math.max(a, v));
+  let last = -1, panX = 0, panY = 0, tx = 0, ty = 0, zoomed = false;
+  const setHouse = (i, zoom) => {
+    if (zoom) zoomed = true;
     if (i === last) return; last = i;
-    pins.forEach((p, k) => p.classList.toggle('is-active', k === i));
-    labels.forEach((p, k) => p.classList.toggle('is-active', k === i));
-    texts.forEach((p, k) => p.classList.toggle('is-active', k === i));
-    routes.forEach((r, k) => { const on = k === i; r.classList.toggle('is-drawn', on); r.style.strokeDashoffset = on ? 0 : lens[k]; });
-    if (counter) counter.textContent = i + 1;
-    // pan so the whole walk (hotel → destination) sits in frame; the outer map is
-    // already scaled by the parallax flight, so damp the shift or it overshoots
-    const pin = pins[i];
-    if (pin) {
-      const dx = parseFloat(pin.style.left), dy = parseFloat(pin.style.top);
-      tx = (50 - (HOME.x + dx) / 2) * .55;
-      ty = (50 - (HOME.y + dy) / 2) * .55;
-    }
+    const k = pinOf(i);
+    pins.forEach((p, j) => p.classList.toggle('is-active', j === k));
+    legend.forEach((l, j) => l.classList.toggle('is-active', j === i));
+    texts.forEach((p, j) => p.classList.toggle('is-active', j === i));
+    const pin = pins[k]; if (!pin) return;
+    const fx = parseFloat(pin.style.left), fy = parseFloat(pin.style.top);
+    if (mdUp()) { tx = (50 - fx) * .08; ty = (50 - fy) * .08; return; }
+    if (!mapEl || !zoomed) return;
+    /* centre the dot: the sheet is already centred by translate(-50%,-50%), so shift
+       it by the dot's offset from centre, magnified by the zoom, and stop short of
+       the sheet's edges so no bone ground shows */
+    const W = mapEl.offsetWidth, H = mapEl.offsetHeight, vw = mapPin.clientWidth, vh = mapPin.clientHeight;
+    const hw = vw / (2 * S * W) * 100, hh = vh / (2 * S * H) * 100;
+    const cx = lim(fx, hw, 100 - hw), cy = lim(fy, hh, 100 - hh);
+    mapEl.style.setProperty('--m-t', `translate(${(-50 - S * (cx - 50)).toFixed(2)}%, ${(-50 - S * (cy - 50)).toFixed(2)}%) scale(${S})`);
   };
   const tick = y => {
     if (section && !sheetStarted) { const t = docTop(section); if (y > t - VH * 2.5 && y < t + section.offsetHeight) loadSheet(); }
-    // desktop only: on touch the horizontal card swipe is the source of truth, and
-    // driving the index from the (hidden, desktop) progress line every frame stamped
-    // straight over it, so the route never followed the swipe
-    if (prog && mdUp()) setIndex(Math.min(pins.length - 1, Math.floor(parseFloat(prog.dataset.progress || '0') * pins.length)));
-    if (inner) {
+    if (inner && mdUp()) {
       panX = lerp(panX, tx, .06); panY = lerp(panY, ty, .06);
       inner.style.transform = `translate(${panX.toFixed(3)}%, ${panY.toFixed(3)}%)`;
     }
   };
+  // desktop: a dot or a legend row under the pointer is the house on the card
+  pins.forEach((p, k) => {
+    p.addEventListener('mouseenter', () => { if (mdUp()) setHouse(housesOf[k][0]); });
+    p.querySelector('.l-location__dot').addEventListener('focus', () => setHouse(housesOf[k][0]));
+  });
+  legend.forEach((l, i) => {
+    l.addEventListener('mouseenter', () => setHouse(i));
+    l.querySelector('button').addEventListener('click', () => setHouse(i));
+  });
   if (mobile) {
     const cards = $$('.l-location__mcard', mobile);
+    let programmatic = 0;
     mobile.addEventListener('scroll', () => {
       const i = Math.round(mobile.scrollLeft / (mobile.scrollWidth - mobile.clientWidth || 1) * (cards.length - 1));
-      setIndex(i);
-      mapPin.className = mapPin.className.replace(/\bis-slide-\d\b/g, '').trim() + (i ? ` is-slide-${i}` : '');
+      setHouse(i, programmatic === 0);
     }, { passive: true });
-    setIndex(0);
+    // a tapped dot swipes the strip to its house, and the strip's scroll zooms the map
+    pins.forEach((p, k) => p.querySelector('.l-location__dot').addEventListener('click', () => {
+      if (mdUp()) return;
+      const i = housesOf[k][0], card = cards[i]; if (!card) return;
+      zoomed = true; programmatic = 1;
+      mobile.scrollTo({ left: card.offsetLeft - (mobile.clientWidth - card.clientWidth) / 2, behavior: 'smooth' });
+      setTimeout(() => { programmatic = 0; last = -1; setHouse(i, true); }, 650);
+    }));
   }
+  setHouse(0);
   return { tick };
 })();
 

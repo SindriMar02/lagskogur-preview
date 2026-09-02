@@ -16,7 +16,7 @@
 <link rel="preload" href="assets/img/hero-hvita@1440.webp" as="image" type="image/webp" media="(min-width: 861px)">
 <link rel="preload" href="assets/img/hero-hvita-p@1080.webp" as="image" type="image/webp" media="(max-width: 860px)">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://lagskogur.is/#org","name":"Lágskógur Vacation Rentals","url":"https://lagskogur.is","email":"info@lagskogur.is","telephone":"+354 864 8181","address":{"@type":"PostalAddress","addressLocality":"Borgarnes","addressCountry":"IS"}},{"@type":"VacationRental","name":"Brún","url":"https://lagskogur.is/brun.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","streetAddress":"Austurbyggð 3","addressLocality":"Laugarás","postalCode":"806","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.11367,"longitude":-20.4886},"occupancy":{"@type":"QuantitativeValue","maxValue":12}},{"@type":"VacationRental","name":"Nes","url":"https://lagskogur.is/nes.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","addressLocality":"Bifröst","postalCode":"311","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.75864,"longitude":-21.53288},"occupancy":{"@type":"QuantitativeValue","maxValue":10}},{"@type":"VacationRental","name":"Bakki","url":"https://lagskogur.is/bakki.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","streetAddress":"Helluskógur 10","addressLocality":"Borgarnes","postalCode":"311","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.62194,"longitude":-21.92817},"occupancy":{"@type":"QuantitativeValue","maxValue":8}},{"@type":"VacationRental","name":"Holt","url":"https://lagskogur.is/holt.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","streetAddress":"Helluskógur 7","addressLocality":"Borgarnes","postalCode":"311","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.6271,"longitude":-21.92336},"occupancy":{"@type":"QuantitativeValue","maxValue":6}},{"@type":"VacationRental","name":"Lundur","url":"https://lagskogur.is/lundur.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","addressLocality":"Borgarnes","postalCode":"311","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.61291,"longitude":-22.03648},"occupancy":{"@type":"QuantitativeValue","maxValue":10}},{"@type":"VacationRental","name":"Klettur","url":"https://lagskogur.is/klettur.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","addressLocality":"Borgarnes","postalCode":"311","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.61315,"longitude":-22.0354},"occupancy":{"@type":"QuantitativeValue","maxValue":6}},{"@type":"VacationRental","name":"Hrossholt","url":"https://lagskogur.is/hrossholt.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","addressLocality":"Snæfellsnes","postalCode":"342","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.83147,"longitude":-22.40003},"occupancy":{"@type":"QuantitativeValue","maxValue":12}}]}</script>
-<link rel="stylesheet" href="styles.css?v=5d7ee65b">
+<link rel="stylesheet" href="styles.css?v=f8e52e89">
 <script>
 document.documentElement.classList.replace('no-js','js');
 /* Coming back from a house page? The preloader only runs once per session, so raise
@@ -444,7 +444,7 @@ try{ if(sessionStorage.getItem('lagskogur-preloaded')) document.documentElement.
 </section>
 
 <!-- 9 ── LOCATIONS / the map, seven pins ───────────────── -->
-<section class="section ui-light l-location" id="locations" data-hold data-themed="ui-light" data-reveal-root
+<section class="section ui-light l-location" id="locations" style="--location-count:2" data-hold data-themed="ui-light" data-reveal-root
          data-gravity-well='[{"viewport":0,"element":0},{"viewport":-790,"element":0},{"viewport":100,"element":100}]'>
   <div class="l-location__grid">
     <div class="sticky sticky--full-height l-location__map-layer">
@@ -453,67 +453,55 @@ try{ if(sessionStorage.getItem('lagskogur-preloaded')) document.documentElement.
     <div class="l-location__map-inner js-map-inner">
       <img class="l-location__map-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3200' height='2560'%3E%3C/svg%3E" data-src="assets/img/map-light.webp" alt="" width="3200" height="2560" decoding="async">
       <!-- real driving routes from Reykjavík, OSRM car profile over OSM -->
-      <svg class="l-location__routes js-routes" viewBox="0 0 125 100" preserveAspectRatio="none" aria-hidden="true">
-      <path class="l-location__route" data-route="0" d="M 42.085 81.024 L 42.240 81.110 L 42.192 81.776 L 42.509 82.022 L 43.145 82.027 L 46.209 83.131 L 48.490 83.123 L 48.736 83.848 L 48.740 84.516 L 48.968 84.964 L 50.708 85.955 L 51.787 86.209 L 54.581 87.899 L 55.851 88.217 L 58.210 89.110 L 60.036 89.337 L 61.660 90.626 L 62.385 91.510 L 63.288 91.971 L 64.076 92.963 L 66.521 93.042 L 68.321 92.700 L 70.733 93.799 L 71.032 93.703 L 71.163 93.300 L 71.315 93.255 L 71.799 94.091 L 71.454 94.483 L 71.471 94.659 L 72.625 95.111 L 74.097 96.074 L 76.010 98.519 L 78.283 98.803 L 79.855 99.254 L 81.044 97.820 L 81.309 96.951 L 81.412 94.975 L 81.652 94.417 L 84.457 91.978 L 85.250 90.858 L 85.936 90.284 L 87.073 89.904 L 89.242 88.141 L 90.419 87.770 L 92.784 84.853 L 93.709 84.457 L 94.986 84.227 L 95.894 83.695 L 96.600 83.573 L 97.673 82.662 L 98.230 81.740 L 98.914 81.101 L 99.195 81.771 L 100.401 82.689 L 100.967 83.333 L 101.190 83.901 L 101.558 84.226 L 101.638 84.114" fill="none"/>
-      <path class="l-location__route" data-route="1" d="M 42.085 81.024 L 42.240 81.110 L 42.192 81.776 L 42.509 82.022 L 43.145 82.027 L 46.209 83.131 L 48.428 83.094 L 49.384 82.393 L 49.874 81.192 L 51.360 79.448 L 51.614 79.303 L 52.315 79.269 L 52.704 79.027 L 52.966 78.615 L 52.848 77.628 L 52.482 76.890 L 51.761 76.171 L 51.547 75.309 L 51.193 75.194 L 49.798 75.455 L 47.536 73.753 L 46.715 71.897 L 46.499 69.414 L 46.264 68.735 L 46.511 67.683 L 44.963 65.954 L 44.678 65.328 L 44.082 65.194 L 43.588 65.756 L 43.351 65.796 L 43.526 65.540 L 44.251 65.142 L 45.030 64.225 L 47.030 62.691 L 47.672 61.219 L 47.395 60.770 L 45.881 59.295 L 45.815 58.930 L 46.023 58.394 L 45.777 57.742 L 43.595 56.944 L 42.922 55.668 L 41.604 54.650 L 41.171 50.460 L 42.274 47.880 L 43.176 46.661 L 44.023 46.323 L 44.336 45.941 L 44.480 44.854 L 43.577 43.848 L 43.392 43.024 L 44.524 40.463 L 46.706 38.386 L 47.099 37.331 L 48.319 36.331 L 49.035 35.336 L 49.474 33.956 L 50.041 33.697 L 50.798 32.633 L 51.491 32.443 L 52.017 31.678 L 53.323 31.052 L 54.287 29.324 L 54.817 28.642 L 55.217 27.590 L 55.955 26.633 L 57.117 23.748 L 57.817 22.945 L 58.321 23.175 L 58.861 22.824" fill="none"/>
-      <path class="l-location__route" data-route="2" d="M 42.085 81.024 L 42.240 81.110 L 42.192 81.776 L 42.509 82.022 L 43.145 82.027 L 46.285 83.145 L 48.479 83.082 L 49.384 82.393 L 49.874 81.192 L 51.360 79.448 L 51.614 79.303 L 52.315 79.269 L 52.704 79.027 L 52.994 78.463 L 52.829 77.585 L 52.482 76.890 L 51.761 76.171 L 51.547 75.309 L 51.193 75.194 L 49.798 75.455 L 47.536 73.753 L 46.715 71.897 L 46.499 69.414 L 46.264 68.735 L 46.511 67.683 L 44.963 65.954 L 44.678 65.328 L 44.082 65.194 L 43.588 65.756 L 43.345 65.775 L 44.251 65.142 L 45.030 64.225 L 46.994 62.729 L 47.678 61.303 L 47.472 60.856 L 45.864 59.264 L 45.815 58.930 L 46.023 58.394 L 45.777 57.742 L 43.553 56.911 L 42.922 55.668 L 41.688 54.760 L 41.529 54.444 L 41.201 50.306 L 42.138 48.081 L 43.176 46.661 L 44.234 46.142 L 44.508 45.097 L 44.415 44.709 L 43.622 43.918 L 43.412 43.363 L 43.403 42.957 L 43.948 41.874 L 42.772 41.842 L 41.025 39.792 L 40.489 39.554 L 40.258 38.913 L 40.291 38.671 L 41.226 37.389 L 41.590 37.114 L 41.918 36.348 L 42.510 35.752 L 42.701 35.957" fill="none"/>
-      <path class="l-location__route" data-route="3" d="M 42.085 81.024 L 42.240 81.110 L 42.192 81.776 L 42.509 82.022 L 43.145 82.027 L 46.285 83.145 L 48.479 83.082 L 49.384 82.393 L 49.874 81.192 L 51.360 79.448 L 51.614 79.303 L 52.315 79.269 L 52.704 79.027 L 52.994 78.463 L 52.829 77.585 L 52.482 76.890 L 51.761 76.171 L 51.547 75.309 L 51.193 75.194 L 49.798 75.455 L 47.536 73.753 L 46.715 71.897 L 46.499 69.414 L 46.264 68.735 L 46.511 67.683 L 44.963 65.954 L 44.678 65.328 L 44.082 65.194 L 43.588 65.756 L 43.345 65.775 L 44.251 65.142 L 45.030 64.225 L 46.994 62.729 L 47.678 61.303 L 47.472 60.856 L 45.864 59.264 L 45.815 58.930 L 46.023 58.394 L 45.777 57.742 L 43.553 56.911 L 42.922 55.668 L 41.688 54.760 L 41.529 54.444 L 41.201 50.306 L 42.138 48.081 L 43.176 46.661 L 44.234 46.142 L 44.509 44.998 L 44.360 44.632 L 43.604 43.892 L 43.412 43.363 L 43.403 42.957 L 43.948 41.874 L 42.772 41.842 L 41.025 39.792 L 40.489 39.554 L 40.258 38.913 L 40.291 38.671 L 41.226 37.389 L 41.590 37.114 L 41.910 36.357 L 42.853 35.482" fill="none"/>
-      <path class="l-location__route" data-route="4" d="M 42.085 81.024 L 42.240 81.110 L 42.192 81.776 L 42.509 82.022 L 43.145 82.027 L 46.285 83.145 L 48.479 83.082 L 49.384 82.393 L 49.817 81.279 L 50.658 80.195 L 51.506 79.344 L 52.168 79.335 L 52.704 79.027 L 52.966 78.615 L 52.988 78.256 L 52.542 76.980 L 51.730 76.113 L 51.689 75.552 L 51.529 75.294 L 51.193 75.194 L 49.798 75.455 L 47.536 73.753 L 46.715 71.897 L 46.499 69.414 L 46.264 68.735 L 46.511 67.683 L 44.963 65.954 L 44.678 65.328 L 44.082 65.194 L 43.588 65.756 L 43.351 65.796 L 43.526 65.540 L 44.251 65.142 L 45.030 64.225 L 47.030 62.691 L 47.672 61.219 L 47.395 60.770 L 45.881 59.295 L 45.815 58.930 L 46.023 58.394 L 45.777 57.742 L 43.553 56.911 L 42.922 55.668 L 41.688 54.760 L 41.529 54.444 L 41.201 50.306 L 42.138 48.081 L 43.176 46.661 L 44.234 46.142 L 44.501 45.151 L 44.415 44.709 L 43.622 43.918 L 43.412 43.363 L 43.403 42.957 L 43.950 41.878 L 42.772 41.842 L 41.025 39.792 L 40.489 39.554 L 40.276 38.929 L 39.680 38.700 L 38.819 37.978 L 37.836 37.418 L 37.810 36.903 L 37.982 37.197 L 38.253 36.860" fill="none"/>
-      <path class="l-location__route" data-route="5" d="M 42.085 81.024 L 42.240 81.110 L 42.192 81.776 L 42.509 82.022 L 43.145 82.027 L 46.285 83.145 L 48.479 83.082 L 49.384 82.393 L 49.817 81.279 L 50.658 80.195 L 51.506 79.344 L 52.168 79.335 L 52.704 79.027 L 52.966 78.615 L 52.988 78.256 L 52.542 76.980 L 51.730 76.113 L 51.689 75.552 L 51.529 75.294 L 51.193 75.194 L 49.798 75.455 L 47.536 73.753 L 46.715 71.897 L 46.499 69.414 L 46.264 68.735 L 46.511 67.683 L 44.963 65.954 L 44.678 65.328 L 44.082 65.194 L 43.588 65.756 L 43.351 65.796 L 43.526 65.540 L 44.251 65.142 L 45.030 64.225 L 47.030 62.691 L 47.672 61.219 L 47.395 60.770 L 45.881 59.295 L 45.815 58.930 L 46.023 58.394 L 45.777 57.742 L 43.553 56.911 L 42.922 55.668 L 41.688 54.760 L 41.529 54.444 L 41.201 50.306 L 42.138 48.081 L 43.176 46.661 L 44.234 46.142 L 44.501 45.151 L 44.415 44.709 L 43.622 43.918 L 43.412 43.363 L 43.403 42.957 L 43.950 41.878 L 42.772 41.842 L 41.025 39.792 L 40.489 39.554 L 40.276 38.929 L 39.680 38.700 L 38.819 37.978 L 37.836 37.418 L 37.810 36.903 L 37.965 37.192 L 38.086 37.181 L 38.287 36.826" fill="none"/>
-      <path class="l-location__route" data-route="6" d="M 42.085 81.024 L 42.240 81.110 L 42.192 81.776 L 42.509 82.022 L 43.145 82.027 L 46.285 83.145 L 48.479 83.082 L 49.384 82.393 L 49.874 81.192 L 51.360 79.448 L 51.614 79.303 L 52.315 79.269 L 52.704 79.027 L 52.994 78.463 L 52.829 77.585 L 52.482 76.890 L 51.761 76.171 L 51.547 75.309 L 51.193 75.194 L 49.798 75.455 L 47.536 73.753 L 46.715 71.897 L 46.499 69.414 L 46.264 68.735 L 46.511 67.683 L 44.963 65.954 L 44.678 65.328 L 44.082 65.194 L 43.588 65.756 L 43.346 65.779 L 43.526 65.540 L 44.251 65.142 L 45.030 64.225 L 46.994 62.729 L 47.678 61.303 L 47.472 60.856 L 45.864 59.264 L 45.815 58.930 L 46.023 58.394 L 45.777 57.742 L 43.553 56.911 L 42.922 55.668 L 41.688 54.760 L 41.529 54.444 L 41.201 50.306 L 42.138 48.081 L 43.176 46.661 L 44.234 46.142 L 44.501 45.151 L 44.415 44.709 L 43.622 43.918 L 43.412 43.363 L 43.403 42.957 L 43.950 41.878 L 42.772 41.842 L 41.025 39.792 L 40.489 39.554 L 40.276 38.929 L 39.680 38.700 L 38.819 37.978 L 37.836 37.418 L 37.614 36.112 L 36.980 35.103 L 36.957 34.139 L 37.151 33.427 L 36.909 32.477 L 36.806 30.878 L 35.260 28.951 L 34.480 28.720 L 34.031 28.405 L 33.558 27.250 L 32.678 26.400 L 32.053 25.272 L 30.337 24.146 L 28.830 22.381 L 28.817 19.985 L 28.989 17.669 L 28.284 16.063 L 27.549 15.413 L 25.662 14.401 L 24.514 14.454 L 24.234 15.155 L 23.595 15.996 L 23.365 15.858" fill="none"/>
-      </svg>
-      <span class="l-location__home" style="left:33.67%;top:81.03%"><i></i></span>
+            <span class="l-location__home" style="left:33.67%;top:81.03%"><i></i></span>
       <div class="l-location__labels" aria-hidden="true">
         <span style="left:60.3%;top:70.7%" class="l-location__landmark">Þingvellir</span>
         <span style="left:87.4%;top:65.6%" class="l-location__landmark">Geysir</span>
         <span style="left:21.1%;top:19.3%" class="l-location__landmark">Eldborg</span>
       </div>
       <ul class="l-location__pins js-location-pins" id="pins" data-parallax-pattern="landingLocationMapPinDesktop" data-parallax-measure=".section">
-        <li class="l-location__pin is-active" style="left:81.32%;top:84.12%" data-pin="0"><i></i><span class="text-small">Brún</span></li>
-        <li class="l-location__pin" style="left:47.10%;top:22.89%" data-pin="1"><i></i><span class="text-small">Nes</span></li>
-        <li class="l-location__pin" style="left:34.14%;top:35.99%" data-pin="2"><i></i><span class="text-small">Bakki</span></li>
-        <li class="l-location__pin" style="left:34.30%;top:35.49%" data-pin="3"><i></i><span class="text-small">Holt</span></li>
-        <li class="l-location__pin" style="left:30.59%;top:36.85%" data-pin="4"><i></i><span class="text-small">Lundur</span></li>
-        <li class="l-location__pin" style="left:30.63%;top:36.83%" data-pin="5"><i></i><span class="text-small">Klettur</span></li>
-        <li class="l-location__pin" style="left:18.68%;top:15.88%" data-pin="6"><i></i><span class="text-small">Hrossholt</span></li>
+        <li class="l-location__pin is-active" style="left:81.32%;top:84.12%" data-pin="0" data-houses="0"><button type="button" class="l-location__dot" aria-label="Brún"><i></i></button><span class="text-small">Brún</span></li>
+        <li class="l-location__pin" style="left:47.10%;top:22.89%" data-pin="1" data-houses="1"><button type="button" class="l-location__dot" aria-label="Nes"><i></i></button><span class="text-small">Nes</span></li>
+        <li class="l-location__pin" style="left:34.22%;top:35.74%" data-pin="2" data-houses="2 3" data-side="right"><button type="button" class="l-location__dot" aria-label="Bakki and Holt"><i></i></button><span class="text-small">Bakki · Holt</span></li>
+        <li class="l-location__pin" style="left:30.61%;top:36.84%" data-pin="3" data-houses="4 5" data-side="left"><button type="button" class="l-location__dot" aria-label="Lundur and Klettur"><i></i></button><span class="text-small">Lundur · Klettur</span></li>
+        <li class="l-location__pin" style="left:18.68%;top:15.88%" data-pin="4" data-houses="6"><button type="button" class="l-location__dot" aria-label="Hrossholt"><i></i></button><span class="text-small">Hrossholt</span></li>
       </ul>
     </div>
   </div>
         <div class="l-location__dim" data-parallax-pattern="landingLocationMapTitleDesktop" data-parallax-measure=".section"></div>
         <h2 class="l-location__title" data-reveal-group data-parallax-pattern="landingLocationMapTitleDesktop" data-parallax-measure=".section">
-          <span class="text-subtitle" data-reveal="subtitle">Seven houses within</span>
+          <span class="text-subtitle" data-reveal="subtitle">Seven houses, all within</span>
           <span class="h0" data-reveal="title">TWO HOURS</span>
         </h2>
       </div>
     </div>
 
     <div class="l-location__card-layer">
-      <div class="sticky sticky--full-height l-location__card-sticky" style="--location-count:7" id="location-cards">
+      <div class="sticky sticky--full-height l-location__card-sticky" id="location-cards">
         <div class="sticky__layer sticky__layer--sticky l-location__card-pin">
           <article class="l-location-card card js-location-card">
             <div class="l-location-card__top">
-              <div class="l-location-card__labels js-loc-labels">
-                <p class="text-small is-active">Brún<br><span>94.8 km · 1 h 27 min from Reykjavík</span></p>
-                <p class="text-small">Nes<br><span>106.8 km · 1 h 42 min from Reykjavík</span></p>
-                <p class="text-small">Bakki<br><span>87.8 km · 1 h 27 min from Reykjavík</span></p>
-                <p class="text-small">Holt<br><span>88.1 km · 1 h 28 min from Reykjavík</span></p>
-                <p class="text-small">Lundur<br><span>87.8 km · 1 h 27 min from Reykjavík</span></p>
-                <p class="text-small">Klettur<br><span>87.9 km · 1 h 27 min from Reykjavík</span></p>
-                <p class="text-small">Hrossholt<br><span>123.2 km · 1 h 56 min from Reykjavík</span></p>
-              </div>
-              <span class="text-small l-location-card__count"><b id="loc-counter">1</b> of 7</span>
+              <p class="text-small l-location-card__hint">Seven houses, from Reykjavík</p>
+              <span class="text-small l-location-card__count"><b>7</b> dots to hover</span>
             </div>
-            <div class="l-location-card__logo"><span class="l-location-card__word">LÁGSKÓGUR</span></div>
+            <ul class="l-location-card__legend js-loc-legend">
+              <li class="is-active" data-house="0"><button type="button"><span>Brún</span><span class="l-location-card__km">94.8 km · 1 h 27 min</span></button></li>
+              <li data-house="1"><button type="button"><span>Nes</span><span class="l-location-card__km">106.8 km · 1 h 42 min</span></button></li>
+              <li data-house="2"><button type="button"><span>Bakki</span><span class="l-location-card__km">87.8 km · 1 h 27 min</span></button></li>
+              <li data-house="3"><button type="button"><span>Holt</span><span class="l-location-card__km">88.1 km · 1 h 28 min</span></button></li>
+              <li data-house="4"><button type="button"><span>Lundur</span><span class="l-location-card__km">87.8 km · 1 h 27 min</span></button></li>
+              <li data-house="5"><button type="button"><span>Klettur</span><span class="l-location-card__km">87.9 km · 1 h 27 min</span></button></li>
+              <li data-house="6"><button type="button"><span>Hrossholt</span><span class="l-location-card__km">123.2 km · 1 h 56 min</span></button></li>
+            </ul>
             <div class="l-location-card__texts js-loc-texts">
-              <p class="is-active">Laugarás, on the Golden Circle. Twelve people, four bedrooms, a roof terrace over the Hvítá and a walk to the Laugarás lagoon.</p>
-              <p>Bifröst, on the Norðurá. Ten people in four bedrooms plus a guest house, with the Glanni waterfall and the Grábrók crater on foot.</p>
-              <p>Helluskógur in Borgarfjörður. Eight people, three bedrooms, drawn by the architect Sigurður Hallgrímsson, with the Langá below.</p>
-              <p>Helluskógur, thirty metres from Bakki. Six people in a timber cottage with a tub for seven; book the two together for fourteen.</p>
-              <p>West of Borgarnes. Ten people across a cabin and its guest house, four bedrooms, a lake and a mountain in the window.</p>
-              <p>Beside Lundur. Six people in three bedrooms; the two houses together take sixteen with a tub each.</p>
-              <p>A farm on Snæfellsnes. Twelve people in five bedrooms, the Eldborg crater from the dining room and the glacier down the road.</p>
+              <p class="is-active">Laugarás, on the Golden Circle. Twelve people, four bedrooms, a roof terrace over the Hvítá and a walk to the Laugarás lagoon. <a class="l-location-card__go" href="brun.html">See Brún</a></p>
+              <p>Bifröst, on the Norðurá. Ten people in four bedrooms plus a guest house, with the Glanni waterfall and the Grábrók crater on foot. <a class="l-location-card__go" href="nes.html">See Nes</a></p>
+              <p>Helluskógur in Borgarfjörður. Eight people, three bedrooms, drawn by the architect Sigurður Hallgrímsson, with the Langá below. <a class="l-location-card__go" href="bakki.html">See Bakki</a></p>
+              <p>Helluskógur, thirty metres from Bakki. Six people in a timber cottage with a tub for seven; book the two together for fourteen. <a class="l-location-card__go" href="holt.html">See Holt</a></p>
+              <p>West of Borgarnes. Ten people across a cabin and its guest house, four bedrooms, a lake and a mountain in the window. <a class="l-location-card__go" href="lundur.html">See Lundur</a></p>
+              <p>Beside Lundur. Six people in three bedrooms; the two houses together take sixteen with a tub each. <a class="l-location-card__go" href="klettur.html">See Klettur</a></p>
+              <p>A farm on Snæfellsnes. Twelve people in five bedrooms, the Eldborg crater from the dining room and the glacier down the road. <a class="l-location-card__go" href="hrossholt.html">See Hrossholt</a></p>
             </div>
-            <div class="l-location-card__line"><i></i><i></i><i></i><i></i><i></i><i></i><span class="l-location-card__progress js-loc-progress" data-parallax-pattern="landingLocationMapProgress" data-parallax-measure=".sticky"></span></div>
           </article>
         </div>
       </div>
@@ -615,6 +603,6 @@ try{ if(sessionStorage.getItem('lagskogur-preloaded')) document.documentElement.
 
 </main>
 
-<script type="module" src="app.js?v=a6d5d579"></script>
+<script type="module" src="app.js?v=62d12aea"></script>
 </body>
 </html>
