@@ -255,6 +255,106 @@ html.with-modal .header__menu-word--close{opacity:1;transform:none}
   .header__left{padding-top:0}
 }
 
+
+/* ---------- ask for nights ---------- */
+/* The "Request a stay" button was a bare mailto: the guest got an empty
+   message window and had to type the house, the dates and the party from
+   memory. This block is the same stay picker the other builds carry, so the
+   request that reaches Heiðrún already says what it is asking for. */
+.booking { padding: calc(var(--spacing)*5) 0 calc(var(--spacing)*6); background: var(--t-background); }
+.bk { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--spacing)*4);
+  max-width: 1240px; margin: 0 auto; padding: 0 calc(var(--spacing)*2); align-items: start; }
+.bk__kicker { color: var(--t-small); margin-bottom: calc(var(--spacing)*1.5); }
+.bk__text { margin-top: calc(var(--spacing)*1.5); font-size: 1.6rem; line-height: 1.55; color: var(--t-primary); max-width: 34rem; }
+.bk__text--small { font-size: 1.3rem; }
+.bk__houses { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: calc(var(--spacing)); }
+.bk__house { border: 1px solid var(--t-line); background: none; cursor: pointer; text-align: left;
+  padding: 10px 12px; min-height: 52px; font-size: 1.4rem; color: var(--t-text); display: grid; gap: 2px;
+  transition: background var(--d-normal) var(--ease-house), color var(--d-normal) var(--ease-house), border-color var(--d-normal) var(--ease-house); }
+.bk__house span { font-size: 1rem; letter-spacing: .1em; text-transform: uppercase; color: var(--t-small); }
+.bk__house[aria-pressed="true"] { background: var(--c-night); border-color: var(--c-night); color: #fff; }
+.bk__house[aria-pressed="true"] span { color: rgba(255,255,255,.6); }
+.bk__label { font-size: 1rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--t-small); }
+.bk__label em { font-style: normal; font-weight: 400; text-transform: none; letter-spacing: .04em; }
+.bk__guests { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  border: 1px solid var(--t-line); border-top: 0; padding: 10px calc(var(--spacing)); }
+.bk__step { display: inline-flex; align-items: center; gap: 4px; }
+.bk__step button { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--t-line);
+  background: none; cursor: pointer; color: inherit; transition: background var(--d-normal) var(--ease-house); }
+.bk__step button:disabled { opacity: .25; cursor: default; }
+.bk__step > span { min-width: 9ch; text-align: center; font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.bk__step em { font-style: normal; font-size: 1.2rem; color: var(--t-small); }
+.bk__sign { position: relative; width: 11px; height: 11px; display: block; }
+.bk__sign::before { content: ""; position: absolute; left: 0; right: 0; top: 5px; border-top: 1px solid currentColor; }
+.bk__sign--plus::after { content: ""; position: absolute; top: 0; bottom: 0; left: 5px; border-left: 1px solid currentColor; }
+.bk__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: calc(var(--spacing)); }
+.bk__field { display: grid; gap: 6px; }
+.bk__field--wide { grid-column: 1 / -1; }
+.bk__field input, .bk__field textarea { font: inherit; font-size: 16px; color: var(--t-text); background: var(--t-background-alt);
+  border: 1px solid var(--t-line); border-radius: 0; padding: 12px; width: 100%; min-height: 46px; }
+.bk__field textarea { resize: vertical; }
+.bk__err { margin-top: calc(var(--spacing)); font-size: 1.3rem; color: #9A3B2A; }
+.bk__go { width: 100%; margin-top: calc(var(--spacing)); min-height: 50px; }
+.bk__foot { margin-top: calc(var(--spacing)); font-size: 1.2rem; line-height: 1.6; color: var(--t-small); }
+
+/* the picker, painted in this build's own ink */
+.lg-stay { border: 1px solid var(--t-line); }
+.lg-stay-head { display: flex; align-items: center; gap: 10px; padding: calc(var(--spacing)) calc(var(--spacing)) 0; }
+.lg-stay-months { flex: 1; min-width: 0; margin: 0; text-align: center; white-space: nowrap; font-size: 1.5rem; }
+.lg-stay-month2 { display: none; color: var(--t-small); }
+.lg-stay-arrow { width: 44px; height: 44px; flex: none; display: grid; place-items: center; border: 1px solid var(--t-line);
+  background: none; cursor: pointer; color: inherit; transition: background var(--d-normal) var(--ease-house); }
+.lg-stay-arrow:disabled { opacity: .25; cursor: default; }
+.lg-stay-chev { width: 7px; height: 7px; border-top: 1px solid currentColor; border-right: 1px solid currentColor; }
+.lg-stay-chev--r { transform: translateX(-2px) rotate(45deg); }
+.lg-stay-chev--l { transform: translateX(2px) rotate(-135deg); }
+.lg-stay-grids { display: grid; gap: calc(var(--spacing)*1.5); padding: calc(var(--spacing)); }
+.lg-stay-grid--2 { display: none; }
+.lg-stay-dows { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 1rem;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--t-small); padding-bottom: 8px; margin-bottom: 4px;
+  border-bottom: 1px solid var(--t-line); }
+.lg-stay-days { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 2px; }
+.lg-stay-day { position: relative; border: 0; background: none; cursor: pointer; padding: 0; color: inherit;
+  aspect-ratio: 1/1; min-height: 38px; display: grid; place-items: center; font: inherit; font-size: 1.4rem;
+  font-variant-numeric: tabular-nums; }
+/* flush cells, fill on a ::before so the numeral stays above it */
+.lg-stay-day::before { content: ""; position: absolute; inset: 2px 0; z-index: 0; transition: background .18s ease; }
+.lg-stay-n { position: relative; z-index: 1; }
+.lg-stay-day.is-out { visibility: hidden; }
+.lg-stay-day.is-past { opacity: .2; cursor: default; }
+.lg-stay-day.is-today .lg-stay-n { color: var(--c-ember); font-weight: 600; }
+.lg-stay-day.is-mid::before { background: rgba(108,147,163,.22); }
+.lg-stay-day.is-start::before, .lg-stay-day.is-end::before { background: var(--c-ember); }
+.lg-stay-day.is-start, .lg-stay-day.is-end { color: #fff; }
+.lg-stay-read { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: stretch;
+  padding: calc(var(--spacing)); border-top: 1px solid var(--t-line); }
+.lg-stay-cell { border: 1px solid var(--t-line); padding: 10px 12px; display: grid; gap: 4px; min-width: 0;
+  transition: border-color .3s ease, background .3s ease; }
+.lg-stay-cell[data-filled] { border-color: rgba(108,147,163,.6); background: rgba(108,147,163,.08); }
+.lg-stay-cell-l { font-size: 1rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--t-small); }
+.lg-stay-cell-v { font-size: 1.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lg-stay-nights { align-self: center; min-width: 7ch; text-align: center; font-size: 1.2rem; color: var(--c-ember);
+  font-variant-numeric: tabular-nums; }
+.lg-stay-note { margin: 0; padding: calc(var(--spacing)); border-top: 1px solid var(--t-line);
+  font-size: 1.3rem; line-height: 1.55; color: var(--t-primary); min-height: 3.2em; }
+@media (hover: hover) {
+  .lg-stay-arrow:not(:disabled):hover, .bk__step button:not(:disabled):hover { background: rgba(22,24,26,.06); }
+  .lg-stay-day:not(:disabled):not(.is-start):not(.is-end):hover::before { background: rgba(22,24,26,.08); }
+  .bk__house:hover { border-color: rgba(22,24,26,.4); }
+}
+/* two months need width: the form is a half column above 768px */
+@media (min-width: 620px) and (max-width: 767px), (min-width: 1180px) {
+  .lg-stay-grids { grid-template-columns: 1fr 1fr; }
+  .lg-stay-grid--2 { display: block; }
+  .lg-stay-month2 { display: inline; }
+}
+@media (max-width: 767px) {
+  .bk { grid-template-columns: 1fr; gap: calc(var(--spacing)*2); padding: 0 var(--spacing); }
+  .bk__houses { grid-template-columns: 1fr 1fr; }
+  .bk__fields { grid-template-columns: 1fr; }
+  .booking { padding: calc(var(--spacing)*3) 0 calc(var(--spacing)*4); }
+}
+
 /* ---------- menu modal ---------- */
 .modal{position:fixed;inset:0;z-index:9;display:block}
 .modal.is-hidden{display:none}

@@ -16,13 +16,14 @@
 <link rel="preload" href="assets/img/hero-hvita@1440.webp" as="image" type="image/webp" media="(min-width: 861px)">
 <link rel="preload" href="assets/img/hero-hvita-p@1080.webp" as="image" type="image/webp" media="(max-width: 860px)">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://lagskogur.is/#org","name":"Lágskógur Vacation Rentals","url":"https://lagskogur.is","email":"info@lagskogur.is","telephone":"+354 864 8181","address":{"@type":"PostalAddress","addressLocality":"Borgarnes","addressCountry":"IS"}},{"@type":"VacationRental","name":"Brún","url":"https://lagskogur.is/brun.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","streetAddress":"Austurbyggð 3","addressLocality":"Laugarás","postalCode":"806","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.11367,"longitude":-20.4886},"occupancy":{"@type":"QuantitativeValue","maxValue":12}},{"@type":"VacationRental","name":"Nes","url":"https://lagskogur.is/nes.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","addressLocality":"Bifröst","postalCode":"311","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.75864,"longitude":-21.53288},"occupancy":{"@type":"QuantitativeValue","maxValue":10}},{"@type":"VacationRental","name":"Bakki","url":"https://lagskogur.is/bakki.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","streetAddress":"Helluskógur 10","addressLocality":"Borgarnes","postalCode":"311","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.62194,"longitude":-21.92817},"occupancy":{"@type":"QuantitativeValue","maxValue":8}},{"@type":"VacationRental","name":"Holt","url":"https://lagskogur.is/holt.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","streetAddress":"Helluskógur 7","addressLocality":"Borgarnes","postalCode":"311","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.6271,"longitude":-21.92336},"occupancy":{"@type":"QuantitativeValue","maxValue":6}},{"@type":"VacationRental","name":"Lundur","url":"https://lagskogur.is/lundur.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","addressLocality":"Borgarnes","postalCode":"311","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.61291,"longitude":-22.03648},"occupancy":{"@type":"QuantitativeValue","maxValue":10}},{"@type":"VacationRental","name":"Klettur","url":"https://lagskogur.is/klettur.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","addressLocality":"Borgarnes","postalCode":"311","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.61315,"longitude":-22.0354},"occupancy":{"@type":"QuantitativeValue","maxValue":6}},{"@type":"VacationRental","name":"Hrossholt","url":"https://lagskogur.is/hrossholt.html","containedInPlace":{"@id":"https://lagskogur.is/#org"},"address":{"@type":"PostalAddress","addressLocality":"Snæfellsnes","postalCode":"342","addressCountry":"IS"},"geo":{"@type":"GeoCoordinates","latitude":64.83147,"longitude":-22.40003},"occupancy":{"@type":"QuantitativeValue","maxValue":12}}]}</script>
-<link rel="stylesheet" href="styles.css?v=dc2aafc5">
+<link rel="stylesheet" href="styles.css?v=1a93467c">
 <script>
 document.documentElement.classList.replace('no-js','js');
 /* Coming back from a house page? The preloader only runs once per session, so raise
    the curtain instantly here and let app.js drop it after the first paint. */
 try{ if(sessionStorage.getItem('lagskogur-preloaded')) document.documentElement.classList.add('is-entering'); }catch(e){}
 </script>
+<script src="assets/vendor/staypicker.js" defer></script>
 <script type="importmap">{"imports":{"three":"./assets/vendor/three.module.min.js"}}</script>
 </head>
 <body class="ui-light">
@@ -568,13 +569,53 @@ try{ if(sessionStorage.getItem('lagskogur-preloaded')) document.documentElement.
             <p class="register__title"><span class="text-subtitle" data-reveal="subtitle">Stay</span><span class="h2" data-reveal="title">IN ONE<br>OF SEVEN</span></p>
             <p class="register__text" data-reveal="text">Tell us the dates, how many you are and which landscape you want. Heiðrún answers herself, usually the same day.</p>
             <div class="register__actions" data-reveal="fade-in slow">
-              <a class="btn btn--primary" href="mailto:info@lagskogur.is" data-booking>Request a stay</a>
+              <a class="btn btn--primary" href="#book" data-booking>Request a stay</a>
               <a class="btn btn--underline" href="tel:+3548648181"><span class="btn__underline">+354 864 8181</span></a>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- 11b ── ASK FOR NIGHTS ──────────────────────────────────── -->
+<section class="section ui-light booking" id="book" data-themed="ui-light" data-reveal-root>
+  <div class="bk">
+    <div class="bk__copy">
+      <p class="text-small bk__kicker">Ask for nights</p>
+      <p class="register__title"><span class="text-subtitle">Tell us</span><span class="h2">THE DATES</span></p>
+      <p class="bk__text">Pick a house and the nights you want. The request goes straight to Heiðrún, and the price for those dates comes with the reply.</p>
+      <p class="bk__text bk__text--small">Or call the house directly on <a class="btn btn--underline" href="tel:+3548648181"><span class="btn__underline">+354 864 8181</span></a>.</p>
+    </div>
+    <form class="bk__form" id="bkForm" novalidate>
+      <div class="bk__houses" role="group" aria-label="Which house">
+          <button type="button" class="bk__house" data-house="Brún" data-sleeps="12" aria-pressed="true">Brún<span>Sleeps 12</span></button>
+          <button type="button" class="bk__house" data-house="Nes" data-sleeps="10" aria-pressed="false">Nes<span>Sleeps 10</span></button>
+          <button type="button" class="bk__house" data-house="Bakki" data-sleeps="8" aria-pressed="false">Bakki<span>Sleeps 8</span></button>
+          <button type="button" class="bk__house" data-house="Holt" data-sleeps="6" aria-pressed="false">Holt<span>Sleeps 6</span></button>
+          <button type="button" class="bk__house" data-house="Lundur" data-sleeps="10" aria-pressed="false">Lundur<span>Sleeps 10</span></button>
+          <button type="button" class="bk__house" data-house="Klettur" data-sleeps="6" aria-pressed="false">Klettur<span>Sleeps 6</span></button>
+          <button type="button" class="bk__house" data-house="Hrossholt" data-sleeps="12" aria-pressed="false">Hrossholt<span>Sleeps 12</span></button>
+      </div>
+      <div id="bkCal"></div>
+      <div class="bk__guests">
+        <span class="bk__label">Guests</span>
+        <div class="bk__step">
+          <button type="button" data-g="-1" aria-label="Fewer guests"><i class="bk__sign"></i></button>
+          <span aria-live="polite"><b id="bkG">2</b><em> of <span id="bkGmax">12</span></em></span>
+          <button type="button" data-g="1" aria-label="More guests"><i class="bk__sign bk__sign--plus"></i></button>
+        </div>
+      </div>
+      <div class="bk__fields">
+        <label class="bk__field"><span class="bk__label">Name</span><input type="text" name="name" id="bkName" autocomplete="name"></label>
+        <label class="bk__field"><span class="bk__label">Email</span><input type="email" name="email" id="bkEmail" autocomplete="email" inputmode="email"></label>
+        <label class="bk__field bk__field--wide"><span class="bk__label">Anything we should know <em>(optional)</em></span><textarea rows="3" name="note" id="bkNote"></textarea></label>
+      </div>
+      <p class="bk__err" id="bkErr" role="alert" hidden></p>
+      <button type="submit" class="btn btn--primary bk__go" id="bkGo">Send the request</button>
+      <p class="bk__foot">No card, no charge. Heiðrún answers herself, usually the same day.</p>
+    </form>
   </div>
 </section>
 
@@ -603,6 +644,6 @@ try{ if(sessionStorage.getItem('lagskogur-preloaded')) document.documentElement.
 
 </main>
 
-<script type="module" src="app.js?v=351f7fc5"></script>
+<script type="module" src="app.js?v=e63f8090"></script>
 </body>
 </html>

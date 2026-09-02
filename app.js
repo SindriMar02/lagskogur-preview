@@ -1265,3 +1265,82 @@ const boot = async () => {
   requestAnimationFrame(loop);
 };
 boot();
+
+/* ============================================================
+   ASK FOR NIGHTS — the stay picker and the request it sends
+   ============================================================ */
+/* The old "Request a stay" button was a bare mailto:, so the guest opened an
+   empty message and had to type the house, the dates and the party from
+   memory. Everything the request needs is chosen here instead, and the mail
+   that opens already carries it. */
+(function booking() {
+  var mount = document.getElementById('bkCal');
+  if (!mount || !window.createStayPicker) return;
+  var L = {
+    months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    weekdays: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    checkIn: 'Check in', checkOut: 'Check out', pickDate: 'Pick a date', afterCheckIn: 'After check in',
+    night: 'night', nights: 'nights', prevMonth: 'Previous month', nextMonth: 'Next month',
+    empty: 'Pick an arrival, then a checkout. Two nights is the shortest stay.',
+    minStay: function (d) { return 'Two nights is the shortest stay, so the earliest checkout is ' + d + '.'; },
+    chosen: function (a, b) { return a + ' to ' + b + '. The price for those nights comes with the reply.'; },
+  };
+  var picker = window.createStayPicker({ mount: mount, prefix: 'lg-stay', minStay: 2, L: L });
+
+  var houses = Array.prototype.slice.call(document.querySelectorAll('.bk__house'));
+  var house = houses[0], guests = 2;
+  var gEl = document.getElementById('bkG'), gMax = document.getElementById('bkGmax');
+  var err = document.getElementById('bkErr'), go = document.getElementById('bkGo');
+
+  function sleeps() { return parseInt(house.dataset.sleeps, 10) || 12; }
+  function syncGuests() {
+    /* A house that sleeps six cannot keep a party of twelve chosen against the
+       previous house. */
+    guests = Math.min(guests, sleeps());
+    gEl.textContent = guests; gMax.textContent = sleeps();
+    document.querySelector('[data-g="-1"]').disabled = guests <= 1;
+    document.querySelector('[data-g="1"]').disabled = guests >= sleeps();
+  }
+  houses.forEach(function (b) {
+    b.addEventListener('click', function () {
+      houses.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      house = b; syncGuests();
+    });
+  });
+  document.querySelectorAll('[data-g]').forEach(function (b) {
+    b.addEventListener('click', function () { guests += parseInt(b.dataset.g, 10); syncGuests(); });
+  });
+  syncGuests();
+
+  function label() {
+    var r = picker.get();
+    go.textContent = r.nights > 0
+      ? 'Ask for these ' + r.nights + (r.nights === 1 ? ' night' : ' nights')
+      : 'Send the request';
+  }
+  mount.addEventListener('click', function () { setTimeout(label, 0); });
+
+  document.getElementById('bkForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var r = picker.get();
+    var name = document.getElementById('bkName').value.trim();
+    var email = document.getElementById('bkEmail').value.trim();
+    function fail(m) { err.textContent = m; err.hidden = false; }
+    if (!r.start || !r.end) return fail('Pick an arrival and a checkout on the calendar first.');
+    if (!name || !email) return fail('A name and an email address are needed so Heiðrún can answer you.');
+    err.hidden = true;
+    var body = [
+      house.dataset.house + ', ' + picker.fmtLong(r.start) + ' to ' + picker.fmtLong(r.end) +
+        ' (' + r.nights + (r.nights === 1 ? ' night' : ' nights') + ')',
+      'Guests: ' + guests,
+      '',
+      document.getElementById('bkNote').value.trim(),
+      '',
+      name,
+      email,
+    ].join('\n');
+    window.location.href = 'mailto:info@lagskogur.is?subject=' +
+      encodeURIComponent(house.dataset.house + ': ' + picker.fmtLong(r.start)) +
+      '&body=' + encodeURIComponent(body);
+  });
+})();
