@@ -86,6 +86,10 @@ em{font-style:italic}
   html{font-size:13px}
 }
 @media (max-width:767px){
+  /* leading-trim's negative margins pull two display lines together by about a
+     quarter em; at desktop sizes that is a tight pair, at phone sizes the
+     italic descenders sat on the caps below. */
+  .text-subtitle + .h0,.text-subtitle + .h1,.text-subtitle + .h2{margin-top:.14em}
   .h0{font-size:4.8rem}.h1,h1{font-size:3.6rem;line-height:1.11}.h2,h2{font-size:2.8rem}.h3{font-size:2rem}
   .text-subtitle{font-size:4rem}.text-subtitle-small{font-size:3rem}
 }
@@ -202,10 +206,43 @@ html.with-modal .header__menu-word--close{opacity:1;transform:none}
 .header .btn--underline{font-size:1.3rem}
 .header .header__book{display:inline-flex}
 @media (max-width:767px){
-  .header{padding:max(var(--spacing),env(safe-area-inset-top)) var(--spacing) 0}
+  .header{padding:calc(env(safe-area-inset-top) + 10px) var(--spacing) 12px;pointer-events:auto}
   .header__book{display:none!important}
   .header__menu-words{display:none}
   .header__logo{width:110px}
+
+  /* THE BAR.
+     The header painted nothing, so on a phone every headline and paragraph
+     scrolled straight THROUGH the wordmark and through the Dynamic Island:
+     the owners' paragraph rendered behind the clock, "every one with a hot
+     tub" ran under the Map link. A translucent wash does not fix that — at
+     low alpha the text underneath passes through as a smear — so the strip
+     the bar occupies is the section's OWN ground at full opacity, with the
+     last third fading out. On a flat cream or ink chapter that reads as
+     headroom rather than as chrome, and over a photograph it reads as the
+     scrim the design already used, never as a slab.
+     Constant presence, material from the section: [[mobile-chrome-standard]]. */
+  .header::after{
+    content:"";position:absolute;inset:0 0 -34px 0;z-index:-1;pointer-events:none;
+    background:linear-gradient(180deg,
+      var(--t-background) 0%,
+      var(--t-background) 70%,
+      color-mix(in srgb,var(--t-background) 0%,transparent) 100%);
+  }
+  /* the hero keeps its own ink gradient, extended to cover the status strip */
+  .header.ui-gradient::after{display:none}
+  .header.ui-gradient::before{
+    height:calc(env(safe-area-inset-top) + 112px);
+    background:linear-gradient(180deg,rgba(17,19,22,.86) 0%,rgba(17,19,22,.5) 56%,transparent 100%);
+    opacity:1}
+  /* a header that moves can arrive over content; on a phone it never moves */
+  .header--hidden{transform:none}
+  /* content passes under a permanent bar, so anchors need the clearance */
+  section[id],[id].section{scroll-margin-top:calc(env(safe-area-inset-top) + 76px)}
+  /* 27x15 and 20x30 were both far under the 44pt target */
+  .header__map,.header__menu{min-height:44px;display:inline-flex;align-items:center}
+  .header__right{align-items:center}
+  .header__left{padding-top:0}
 }
 
 /* ---------- menu modal ---------- */
