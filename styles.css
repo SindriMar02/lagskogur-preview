@@ -223,13 +223,22 @@ html.with-modal .header__menu-word--close{opacity:1;transform:none}
      headroom rather than as chrome, and over a photograph it reads as the
      scrim the design already used, never as a slab.
      Constant presence, material from the section: [[mobile-chrome-standard]]. */
+  /* Both the bar and the status strip are driven by html.hd-dark, never by the
+     header's own theme class. The strip is painted by the SCROLLING layer (a
+     fixed element paints nothing above the layout viewport), so if the two
+     read different sources they disagree at every chapter whose ground and
+     whose header theme are not the same thing, and the phone shows an ink
+     strip sitting on a cream bar. One source, one colour. */
   .header::after{
     content:"";position:absolute;inset:0 0 -34px 0;z-index:-1;pointer-events:none;
-    background:linear-gradient(180deg,
-      var(--t-background) 0%,
-      var(--t-background) 70%,
-      color-mix(in srgb,var(--t-background) 0%,transparent) 100%);
+    background:linear-gradient(180deg,#EFECE6 0%,#EFECE6 70%,rgba(239,236,230,0) 100%);
   }
+  html.hd-dark .header::after{
+    background:linear-gradient(180deg,#16181A 0%,#16181A 70%,rgba(22,24,26,0) 100%);
+  }
+  html.hd-dark .header,html.hd-dark .header .btn{color:#fff}
+  html:not(.hd-dark) .header,html:not(.hd-dark) .header .btn{color:#16181A}
+  html:not(.hd-dark) .header .header__logo-mark{filter:invert(1) brightness(.1)}
   /* the hero keeps its own ink gradient, extended to cover the status strip */
   .header.ui-gradient::after{display:none}
   .header.ui-gradient::before{
