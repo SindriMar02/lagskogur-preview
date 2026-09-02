@@ -771,7 +771,11 @@ html.no-scroll-smooth .l-tenets{clip-path:inset(0 0 -100svh)}
   .l-location__dim{opacity:.22!important}
   .l-location__title{opacity:1!important;align-items:flex-start;justify-content:flex-start;padding:calc(var(--spacing)*5) var(--spacing) 0;text-align:left}
   .l-location__card-layer{display:none}
-  .l-location__mobile{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:var(--spacing);margin-top:-19svh;position:relative;z-index:1;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  /* -19svh put the house cards on the bottom edge, where Safari's floating
+     URL bar covers them; the rail is the control that pans the map, so half
+     of it being under the browser chrome made the chapter look like a static
+     picture of one pin. */
+  .l-location__mobile{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:var(--spacing) var(--spacing) calc(var(--spacing) + env(safe-area-inset-bottom));margin-top:-27svh;position:relative;z-index:1;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .l-location__mobile::-webkit-scrollbar{display:none}
   .l-location__mcard{flex:0 0 74vw;scroll-snap-align:center;min-height:0;background:#16181A;color:#fff;padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px}
   .l-location__mcard .text-small{color:#fff}
