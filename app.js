@@ -570,6 +570,13 @@ const header = (() => {
     if (cur && cur.cls !== lastCls) {
       h.classList.remove('ui-dark', 'ui-light', 'ui-gradient', 'ui-intro');
       h.classList.add(...cur.cls.split(/\s+/)); lastCls = cur.cls;
+      /* A position:fixed bar paints ZERO pixels above the layout viewport on
+         iOS, so the header's own background can never reach the status strip:
+         over a dark chapter the strip stayed cream and read as a pale bar
+         above the design. Safari samples html's background-color there when
+         nothing fixed or sticky qualifies, so the page root carries the
+         section's ground instead. See [[mobile-chrome-standard]]. */
+      document.documentElement.classList.toggle('hd-dark', cur.cls.indexOf('ui-dark') !== -1);
     }
     h.classList.toggle('header--top', y <= 10);
   };

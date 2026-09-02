@@ -38,6 +38,7 @@
 @media (min-width:2400px){:root{--spacing:40px}}
 
 .ui-light{--t-background:#EFECE6;--t-background-alt:#E7E3DB;--t-text:#16181A;--t-heading:#16181A;--t-primary:#6A6E68;--t-primary-alt:#6A6E68;--t-line:rgba(22,24,26,.2);--t-line-alt:rgba(22,24,26,.1);--t-small:rgba(22,24,26,.5);color:var(--t-text)}
+html.hd-dark{background:#16181A}
 .ui-dark{--t-background:#16181A;--t-background-alt:#111316;--t-text:#fff;--t-heading:#fff;--t-primary:#6A6E68;--t-primary-alt:rgba(255,255,255,.5);--t-line:rgba(255,255,255,.1);--t-line-alt:rgba(255,255,255,.1);--t-small:#6A6E68;color:var(--t-text)}
 .ui-background{background:var(--t-background)}
 .ui-background-alt{background:var(--t-background-alt)}
@@ -238,7 +239,7 @@ html.with-modal .header__menu-word--close{opacity:1;transform:none}
   /* a header that moves can arrive over content; on a phone it never moves */
   .header--hidden{transform:none}
   /* content passes under a permanent bar, so anchors need the clearance */
-  section[id],[id].section{scroll-margin-top:calc(env(safe-area-inset-top) + 76px)}
+  section[id],[id].section{scroll-margin-top:calc(env(safe-area-inset-top) + 98px)}
   /* 27x15 and 20x30 were both far under the 44pt target */
   .header__map,.header__menu{min-height:44px;display:inline-flex;align-items:center}
   .header__right{align-items:center}
@@ -1154,7 +1155,7 @@ html.no-scroll-smooth .l-quotes__sticky{cursor:auto}
 /* ============================================================
    LÁGSKÓGUR additions: daylight ground, the lockup, the light map, the colossal foot
    ============================================================ */
-html{background:#EFECE6;color-scheme:light}
+html{background:#EFECE6;transition:background-color var(--d-normal) var(--ease-house);color-scheme:light}
 body{background:#EFECE6;color:#16181A}
 .page-overlay,.preloader{background:#EFECE6}
 .preloader__word{font-family:var(--font-serif);font-weight:300;font-size:2rem;letter-spacing:.22em;text-transform:uppercase;color:#16181A;padding-left:.22em}
